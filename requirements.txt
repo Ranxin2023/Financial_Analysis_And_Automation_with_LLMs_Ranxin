@@ -1,0 +1,7 @@
+#NLP Dependencies
+langchain_pinecone
+openai
+langchain-community
+sentence_transformers
+#Data Dependencies
+yfinance
