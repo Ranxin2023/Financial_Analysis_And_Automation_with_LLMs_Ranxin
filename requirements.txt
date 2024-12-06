@@ -1,7 +1,12 @@
+# Core dependencies
+streamlit                   # Streamlit for the web app
+python-dotenv               # To manage environment variables
 #NLP Dependencies
 langchain_pinecone
-openai
 langchain-community
 sentence_transformers
+scikit-learn                # For cosine similarity and other ML utilities
 #Data Dependencies
 yfinance
+# OpenAI/Groq API
+openai                      # OpenAI API integration (if used)
