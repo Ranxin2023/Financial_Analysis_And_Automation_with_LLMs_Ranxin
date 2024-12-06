@@ -17,7 +17,7 @@ Original file is located at
 
 from langchain_pinecone import PineconeVectorStore
 from openai import OpenAI
-import dotenv
+# import dotenv
 import json
 import yfinance as yf
 import concurrent.futures
