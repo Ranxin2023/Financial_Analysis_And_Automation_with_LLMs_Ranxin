@@ -34,7 +34,7 @@ from dotenv import load_dotenv
 #customer import
 from modules.get_stock_info import get_stock_info
 from modules.get_company_tickets import get_company_tickers
-from modules.process_stock import process_stock, parallel_process_stocks
+from modules.process_stock import parallel_process_stocks
 from NLP_utils.get_cos_similarity import cosine_similarity_between_sentences
 from NLP_utils.get_huggingface_embeddings import get_huggingface_embeddings
 load_dotenv()

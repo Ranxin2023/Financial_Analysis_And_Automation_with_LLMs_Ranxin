@@ -1,8 +1,8 @@
 import concurrent.futures
-from get_stock_info import get_stock_info
 from langchain.schema import Document
 from langchain_pinecone import PineconeVectorStore
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from modules.get_stock_info import get_stock_info
 # from typing import List
 # Initialize tracking lists
 successful_tickers = []
