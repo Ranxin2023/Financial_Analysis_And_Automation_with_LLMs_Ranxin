@@ -45,3 +45,21 @@ Launch the Streamlit app:
 streamlit run app.py
 
 ```
+
+## Project Structure
+```sh
+.
+├── modules/
+│   ├── get_company_tickets.py    # Module to fetch and manage company tickers from external sources
+│   ├── get_stock_info.py         # Module to retrieve stock details from Yahoo Finance and preprocess data
+│   ├── process_stock.py          # Implements RAG functionality
+│   └── __init__.py               # Module initialization
+│── NLP_utils/
+│   ├──get_cos_similarity.py         # Utility to calculate cosine similarity between text embeddings
+│   ├──get_huggingface_embeddings.py # Utility for generating embeddings using HuggingFace models
+├── app.py                        # Main Streamlit application
+├── requirements.txt              # Python dependencies
+├── .env                          # Environment variables (API keys)
+└── README.md                     # Project documentation
+
+```
