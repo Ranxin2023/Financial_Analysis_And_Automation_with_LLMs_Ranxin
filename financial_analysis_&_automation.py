@@ -30,7 +30,10 @@ from pinecone import Pinecone
 import numpy as np
 import requests
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
+pinecone_api_key = os.getenv("PINECONE_API_KEY")
+groq_api_key = os.getenv("GROQ_API_KEY")
 def get_stock_info(symbol: str) -> dict:
     """
     Retrieves and formats detailed information about a stock from Yahoo Finance.
@@ -197,8 +200,8 @@ len(company_tickers)
 
 """
 
-pinecone_api_key = userdata.get("PINECONE_API_KEY")
-os.environ['PINECONE_API_KEY'] = pinecone_api_key
+# pinecone_api_key = userdata.get("PINECONE_API_KEY")
+# os.environ['PINECONE_API_KEY'] = pinecone_api_key
 
 index_name = "stocks"
 namespace = "stock-descriptions"
@@ -318,7 +321,7 @@ parallel_process_stocks(tickers_to_process, max_workers=10)
 """# Perform RAG"""
 
 # Initialize Pinecone
-pc = Pinecone(api_key=userdata.get("PINECONE_API_KEY"),)
+pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"],)
 
 # Connect to your Pinecone index
 pinecone_index = pc.Index(index_name)
@@ -348,7 +351,7 @@ print(augmented_query)
 
 client = OpenAI(
   base_url="https://api.groq.com/openai/v1",
-  api_key=userdata.get("GROQ_API_KEY")
+  api_key=os.environ["GROQ_API_KEY"]
 )
 
 system_prompt = f"""You are an expert at providing answers about stocks. Please answer my question provided.
