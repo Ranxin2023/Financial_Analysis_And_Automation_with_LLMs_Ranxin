@@ -52,7 +52,7 @@ streamlit run app.py
 ├── modules/
 │   ├── get_company_tickets.py    # Module to fetch and manage company tickers from external sources
 │   ├── get_stock_info.py         # Module to retrieve stock details from Yahoo Finance and preprocess data
-│   ├── process_stock.py          # Implements RAG functionality
+│   ├── process_stock.py          # Methods for processing the stock in serialization and parallelism
 │   └── __init__.py               # Module initialization
 │── NLP_utils/
 │   ├──get_cos_similarity.py         # Utility to calculate cosine similarity between text embeddings
