@@ -3,12 +3,15 @@ from get_stock_info import get_stock_info
 from langchain.schema import Document
 from langchain_pinecone import PineconeVectorStore
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from typing import List
+# from typing import List
+# Initialize tracking lists
+successful_tickers = []
+unsuccessful_tickers = []
 hf_embeddings = HuggingFaceEmbeddings()
 index_name = "stocks"
 namespace = "stock-descriptions"
 vectorstore = PineconeVectorStore(index_name=index_name, embedding=hf_embeddings)
-def process_stock(stock_ticker: str, successful_tickers:List, unsuccessful_tickers:List) -> str:
+def process_stock(stock_ticker: str) -> str:
     # Skip if already processed
     if stock_ticker in successful_tickers:
         return f"Already processed {stock_ticker}"
