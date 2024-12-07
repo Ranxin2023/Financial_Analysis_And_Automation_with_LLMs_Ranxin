@@ -2,8 +2,8 @@
 
 __pycache__/
 
-successful_tickets.txt
-unsuccessful_tickets.txt
+successful_tickers.txt
+unsuccessful_tickers.txt
 
 company_tickers.json
 
