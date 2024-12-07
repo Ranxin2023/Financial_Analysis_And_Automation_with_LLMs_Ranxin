@@ -78,37 +78,7 @@ similarity = cosine_similarity_between_sentences(aapl_description, company_descr
 
 company_tickers = get_company_tickers()
 
-# company_tickers
 
-# len(company_tickers)
-
-
-
-# """# Inserting Stocks into Pinecone
-
-# **1. Create an account on [Pinecone.io](https://app.pinecone.io/)**
-
-# **2. Create a new index called "stocks" and set the dimensions to 768. Leave the rest of the settings as they are.**
-
-# ![Screenshot 2024-12-02 at 4 48 03 PM](https://github.com/user-attachments/assets/13b484da-cd00-4337-a4db-4779080eb42c)
-
-
-# **3. Create an API Key for Pinecone**
-
-# ![Screenshot 2024-11-24 at 10 44 37 PM](https://github.com/user-attachments/assets/e7feacc6-2bd1-472a-82e5-659f65624a88)
-
-
-# **4. Store your Pinecone API Key within Google Colab's secrets section, and then enable access to it (see the blue checkmark)**
-
-
-# ![Screenshot 2024-11-24 at 10 45 25 PM](https://github.com/user-attachments/assets/eaf73083-0b5f-4d17-9e0c-eab84f91b0bc)
-
-
-
-# """
-
-# pinecone_api_key = userdata.get("PINECONE_API_KEY")
-# os.environ['PINECONE_API_KEY'] = pinecone_api_key
 
 index_name = "stocks"
 namespace = "stock-descriptions"
@@ -169,56 +139,7 @@ pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"],environment="us-west1-gcp")
 # Connect to your Pinecone index
 pinecone_index = pc.Index(index_name)
 
-# def rank_stocks_by_query(query, top_k=5):
-#     """
-#     Finds the most similar stocks to a user query using cosine similarity and Hugging Face embeddings.
 
-#     Args:
-#         query (str): User's natural language query.
-#         vectorstore: Pinecone vector store instance.
-#         top_k (int): Number of top similar stocks to return.
-
-#     Returns:
-#         list: Ranked list of the top-k most similar stocks with their similarity scores and metadata.
-#     """
-#     # Generate embedding for the query and convert to a Python list
-#     query_embedding = get_huggingface_embeddings(query).tolist()
-
-#     ranked_stocks = []
-
-#     # Iterate through successfully processed tickers
-#     idx=0
-#     for ticker in successful_tickers:
-#         print(f"tickers batch :{idx}")
-#         idx+=1
-#         try:
-#             # Retrieve the stock embedding and metadata from Pinecone
-#             result = pinecone_index.query(
-#                 vector=query_embedding,  # Ensure the embedding is a Python list
-#                 top_k=1,  # We want data for the specific ticker
-#                 include_metadata=True,
-#                 namespace=namespace
-#             )
-
-#             if result['matches']:
-#                 match = result['matches'][0]
-#                 metadata = match['metadata']
-#                 score = match['score']  # Pinecone already provides a similarity score
-
-#                 # Append the result to the ranked stocks
-#                 ranked_stocks.append({
-#                     "Ticker": ticker,
-#                     "Score": score,
-#                     "Details": metadata
-#                 })
-
-#         except Exception as e:
-#             print(f"Error retrieving data for {ticker}: {e}")
-
-#     # Sort by similarity score in descending order
-#     ranked_stocks = sorted(ranked_stocks, key=lambda x: x['Score'], reverse=True)
-
-#     return ranked_stocks[:top_k]
 def rank_stocks_by_query_parallel(query, top_k=5, max_workers=15):
     """
     Finds the most similar stocks to a user query using cosine similarity and Hugging Face embeddings.
@@ -286,72 +207,7 @@ def rank_stocks_by_query_parallel(query, top_k=5, max_workers=15):
     return ranked_stocks[:top_k]
 
 
-# Example usage
-# query = "What are some companies that manufacture consumer hardware?"
-# ranked_results = rank_stocks_by_query_parallel(query, top_k=5)
 
-# Print results
-# print("Ranked Stocks:")
-# for result in ranked_results:
-#     print(f"{result['Ticker']}: {result['Score']:.4f}")
-#     print(f"Details: {result['Details']}")
-
-# # Prepare your tickers
-# tickers_to_process = [company_tickers[num]['ticker'] for num in company_tickers.keys()]
-
-# # Process them
-# # parallel_process_stocks(tickers_to_process, max_workers=10)
-
-# """# Perform RAG"""
-
-# # Initialize Pinecone
-# pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"],environment="us-west1-gcp")
-
-# # Connect to your Pinecone index
-# pinecone_index = pc.Index(index_name)
-
-# query = "What are some companies that manufacture consumer hardware?"
-
-# raw_query_embedding = get_huggingface_embeddings(query)
-
-# top_matches = pinecone_index.query(vector=raw_query_embedding.tolist(), top_k=10, include_metadata=True, namespace=namespace)
-
-# top_matches
-
-# contexts = [item['metadata']['text'] for item in top_matches['matches']]
-
-# augmented_query = "<CONTEXT>\n" + "\n\n-------\n\n".join(contexts[ : 10]) + "\n-------\n</CONTEXT>\n\n\n\nMY QUESTION:\n" + query
-
-# print(augmented_query)
-
-# """# Setting up Groq for RAG
-
-# 1. Get your Groq API Key [here](https://console.groq.com/keys). Through Groq, you get free access to various LLMs
-
-# 2. Paste your Groq API Key into your Google Colab secrets, and make sure to enable permissions for it
-
-# ![Screenshot 2024-11-25 at 12 00 16 AM](https://github.com/user-attachments/assets/e5525d29-bca6-4dbd-892b-cc770a6b281d)
-# """
-
-# client = OpenAI(
-#   base_url="https://api.groq.com/openai/v1",
-#   api_key=os.environ["GROQ_API_KEY"]
-# )
-
-# system_prompt = f"""You are an expert at providing answers about stocks. Please answer my question provided.
-# """
-
-# llm_response = client.chat.completions.create(
-#     model="llama-3.1-70b-versatile",
-#     messages=[
-#         {"role": "system", "content": system_prompt},
-#         {"role": "user", "content": augmented_query}
-#     ]
-# )
-
-# response = llm_response.choices[0].message.content
-
-# print(response)
 client = Groq(
     api_key=groq_api_key,
 )
