@@ -64,13 +64,19 @@ GROQ_API_KEY=your-groq-api-key
 
 5. Get groq keys [here](https://console.groq.com/keys)
 
-6. Run the Application
-- process all the stock locally
+6. Process all the stock locally
+Run the `process_stocks.py` script to process all the stock data and generate two local files:
+- `successful_tickers.txt` (contains successfully processed stocks)
+- `unsuccessful_tickers.txt` (contains stocks that failed processing)
 ```sh
 python process_stocks.py
 
 ```
-- Launch the Streamlit app:
+The script will update the local files as it processes the stocks. It will stop when no further updates are made to the `successful_tickers.txt` file.
+For reference, the number of successfully processed stocks in my case is 6968.
+
+
+7. Launch the Streamlit app:
 ```sh
 streamlit run app.py
 
