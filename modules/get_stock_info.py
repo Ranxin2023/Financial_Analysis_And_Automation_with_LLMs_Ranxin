@@ -28,4 +28,4 @@ def get_stock_info(symbol: str) -> dict:
 
 data = yf.Ticker("NVDA")
 stock_info = data.info
-print(stock_info)
+# print(stock_info)
