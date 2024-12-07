@@ -106,6 +106,7 @@ PROJECT2/
 ├── app.py                              # Main Streamlit application
 ├── README.md                           # Project documentation
 ├── requirements.txt                    # Python dependencies
+├── process_stocks                      # process all the stocks in parallel
 ├── successful_tickers.txt              # List of successfully processed tickers
 └── unsuccessful_tickers.txt            # List of unsuccessfully processed tickers
 
