@@ -1,5 +1,12 @@
 # Financial Analysis & Automation with LLMs
 
+## Introduction
+
+This project leverages AI and Natural Language Processing (NLP) to automate the research process for financial stocks. Users can input natural language queries, and the system ranks relevant stocks based on their descriptions, fetched dynamically using APIs. By employing techniques like cosine similarity and vector embedding, the system finds stocks most relevant to the user's query.
+
+This repository also demonstrates optimized stock data processing using parallelization for faster computation, making it scalable and efficient for large datasets.
+
+
 ## Technologies Used
 - Python
 - Streamlit (Frontend for the chatbot)
@@ -8,6 +15,24 @@
 - HuggingFace Transformers (Embeddings)
 - Groq/OpenAI API (LLM for generating responses)
 - Concurrency
+
+## Sequential vs Parallel Processing
+### Sequential Processing
+Sequential processing involves fetching and storing data for stocks one by one. While simpler to implement, this method is slow and inefficient for processing a large number of stocks.
+
+- Workflow
+1. Fetch stock data for AAPL.
+2. Wait for API response, store data.
+3. Fetch stock data for GOOGL, and repeat for other stocks sequentially.
+
+
+### Parallel Processing
+To improve efficiency, the project uses parallel processing. Multiple worker threads process stocks simultaneously, significantly reducing processing time.
+
+- Workflow
+1. Distribute stocks across workers.
+2. Fetch and store data concurrently.
+3. Monitor progress and handle errors dynamically.
 
 ## Setup Instructions
 1. clone the repository
@@ -40,7 +65,12 @@ GROQ_API_KEY=your-groq-api-key
 5. Get groq keys [here](https://console.groq.com/keys)
 
 6. Run the Application
-Launch the Streamlit app:
+- process all the stock locally
+```sh
+python process_stocks.py
+
+```
+- Launch the Streamlit app:
 ```sh
 streamlit run app.py
 
@@ -48,20 +78,49 @@ streamlit run app.py
 
 ## Project Structure
 ```sh
-.
-├── modules/
-│   ├── get_company_tickets.py    # Module to fetch and manage company tickers from external sources
-│   ├── get_stock_info.py         # Module to retrieve stock details from Yahoo Finance and preprocess data
-│   ├── process_stock.py          # Methods for processing the stock in serialization and parallelism
-│   └── __init__.py               # Module initialization
-│── NLP_utils/
-│   ├──get_cos_similarity.py         # Utility to calculate cosine similarity between text embeddings
-│   ├──get_huggingface_embeddings.py # Utility for generating embeddings using HuggingFace models
-├── app.py                        # Main Streamlit application
-├── requirements.txt              # Python dependencies
-├── .env                          # Environment variables (API keys)
-└── README.md                     # Project documentation
+PROJECT2/
+├── modules/                            # Core modules for processing stock data
+│   ├── __init__.py                     # Module initialization
+│   ├── get_company_tickets.py          # Fetches company tickers
+│   ├── get_stock_info.py               # Retrieves stock information from Yahoo Finance
+│   └── process_stock.py                # Parallel processing and storing of stock data
+│
+├── NLP_utils/                          # Utilities for NLP processing
+│   ├── __init__.py                     # Module initialization
+│   ├── get_cos_similarity.py           # Computes cosine similarity between embeddings
+│   └── get_huggingface_embeddings.py   # Generates embeddings using HuggingFace
+│
+├── assets/                             # Diagrams and JSON files
+│   ├── company_tickers.json            # Contains all company tickers data
+│   ├── parallel_diagram.png            # Diagram illustrating parallel processing
+│   └── serial_diagram.png              # Diagram illustrating sequential processing
+│
+├── .env                                # Environment variables (API keys)
+├── .gitignore                          # Git ignore file
+├── app.py                              # Main Streamlit application
+├── README.md                           # Project documentation
+├── requirements.txt                    # Python dependencies
+├── successful_tickers.txt              # List of successfully processed tickers
+└── unsuccessful_tickers.txt            # List of unsuccessfully processed tickers
 
 ```
 
+## Usage Example
 
+### Question
+What are some companies that manufacture consumer hardware?
+
+### Answer
+Based on your context, it appears that you are looking for companies that manufacture consumer hardware. Here are some popular companies that fit the bill:
+
+1. NVIDIA (NVDA): Although not exclusively a hardware manufacturer, they design and manufacture graphics processing units (GPUs) that are widely used in gaming and other consumer electronics.
+2. Taiwan Semiconductor Manufacturing Company (TSM): TSMC is a leading semiconductor foundry, producing a wide range of consumer electronics components, including processors, memory chips, and other hardware components used in consumer devices.
+As for other companies not listed in the provided context:
+
+1. Apple (AAPL): Designs and manufactures iPhones, Macs, iPads, Apple Watches, and AirPods.
+2. Samsung Electronics (SSNLF): Manufactures a wide range of consumer electronics, including smartphones, televisions, home appliances, and wearables.
+3. Dell Technologies (DELL): Designs and manufactures a broad range of consumer electronics, including PCs, laptops, tablets, and other devices.
+4. HP Inc. (HPQ): Manufactures a wide range of consumer electronics, including PCs, printers, laptops, and other devices.
+5. Intel Corporation (INTC): Designs and manufactures microprocessors, chipsets, and other hardware components used in consumer electronics.
+
+Please note that the list is not exhaustive, and there are many other companies that manufacture consumer hardware components and devices.
