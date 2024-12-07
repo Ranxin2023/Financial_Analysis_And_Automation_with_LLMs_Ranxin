@@ -34,7 +34,7 @@ To improve efficiency, the project uses parallel processing. Multiple worker thr
 2. Fetch and store data concurrently.
 3. Monitor progress and handle errors dynamically.
 
-## Setup Instructions
+## Setup and Running Instructions
 1. clone the repository
 ```sh
 git clone https://github.com/Ranxin2023/Financial_Analysis_And_Automation_with_LLMs_Ranxin
