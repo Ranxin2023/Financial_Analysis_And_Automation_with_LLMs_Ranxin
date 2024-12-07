@@ -1,6 +1,7 @@
 # Core dependencies
 streamlit                   # Streamlit for the web app
 python-dotenv               # To manage environment variables
+Groq                        # package for openAI
 #NLP Dependencies
 langchain_pinecone
 langchain-community

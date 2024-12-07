@@ -1,3 +1,10 @@
 .env
 
 __pycache__/
+
+successful_tickets.txt
+unsuccessful_tickets.txt
+
+company_tickers.json
+
+./sample_data
