@@ -8,3 +8,5 @@ unsuccessful_tickers.txt
 company_tickers.json
 
 ./sample_data
+
+.mailmap
